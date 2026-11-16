@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Primeiro passo – guia de apoio emocional</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef4f6;--surf:#fff;--ink:#1f3036;--mut:#53666d;--pri:#2c6e7f;--pri-ink:#fff;--soft:#d9ebef;--line:#c5d7dc;--warn:#fff4d6;--warn-ink:#5a4510;--ok:#1f6b45;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14222700;--bg:#142227;--surf:#1d2f35;--ink:#e8f1f3;--mut:#a9bcc2;--pri:#7cc3d3;--pri-ink:#0f2228;--soft:#264049;--line:#38565f;--warn:#3d3416;--warn-ink:#f3e2a8;--ok:#7fd4a3;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#142227;--surf:#1d2f35;--ink:#e8f1f3;--mut:#a9bcc2;--pri:#7cc3d3;--pri-ink:#0f2228;--soft:#264049;--line:#38565f;--warn:#3d3416;--warn-ink:#f3e2a8;--ok:#7fd4a3;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 "Atkinson Hyperlegible",system-ui,"Segoe UI",Arial,sans-serif}
+header{padding:1rem 1.25rem;display:flex;align-items:center;gap:.6rem;max-width:44rem;margin:0 auto}
+header b{font-size:1.15rem}
+.dot{width:2rem;height:2rem;border-radius:50%;background:var(--pri);color:var(--pri-ink);display:grid;place-items:center;font-size:1.1rem}
+main{max-width:44rem;margin:0 auto;padding:.5rem 1.25rem 2rem}
+h1{font-size:1.75rem;line-height:1.25;margin:.5rem 0 .75rem}
+h2{font-size:1.2rem;margin:1.5rem 0 .4rem}
+p{margin:.4rem 0;max-width:62ch}
+.mut{color:var(--mut)}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;margin:.9rem 0}
+.note{background:var(--warn);color:var(--warn-ink);border-radius:10px;padding:.7rem .9rem;font-size:.95rem;margin:.9rem 0}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font:700 1rem/1.2 inherit;font-family:inherit;border:2px solid var(--pri);background:var(--pri);color:var(--pri-ink);border-radius:12px;padding:.85rem 1.2rem;min-height:3rem;cursor:pointer;text-decoration:none}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn.quiet{border-color:transparent;background:transparent;color:var(--mut);text-decoration:underline}
+.btn[disabled],.btn[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #e0a100;outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:.7rem;margin:1rem 0}
+.choice{display:grid;gap:.8rem;margin-top:1rem}
+.choice .btn{justify-content:flex-start;padding:1.1rem 1.2rem;font-size:1.1rem}
+.choice small{display:block;font-weight:400;opacity:.9}
+label{display:block;font-weight:700;margin:.9rem 0 .3rem}
+input,select{width:100%;font:inherit;padding:.75rem .8rem;border:2px solid var(--line);border-radius:10px;background:var(--surf);color:var(--ink);min-height:3rem}
+.grid3{display:grid;gap:0 1rem}
+@media(min-width:36rem){.grid3{grid-template-columns:repeat(3,1fr)}}
+.tag{display:inline-block;background:var(--soft);border-radius:999px;padding:.15rem .7rem;font-size:.9rem;margin:.15rem .3rem .15rem 0}
+.tag.free{color:var(--ok);font-weight:700}
+.empty{text-align:center;padding:1.6rem 1rem}
+dl{margin:0;display:grid;gap:.7rem}dt{font-weight:700}dd{margin:0}
+.na{color:var(--mut);font-style:italic}
+.toast{position:fixed;left:50%;bottom:calc(1.2rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.8rem 1.3rem;border-radius:999px;font-weight:700;z-index:5}
+.steps{padding-left:1.2rem}
+footer{max-width:44rem;margin:0 auto;padding:0 1.25rem 2rem;font-size:.9rem;color:var(--mut)}
+.end{text-align:center;padding:2rem 1rem}
+@media(prefers-reduced-motion:no-preference){.toast{animation:in .2s ease-out}@keyframes in{from{opacity:0;transform:translate(-50%,8px)}}}
+</style>
+</head>
+<body>
+<header><span class="dot" aria-hidden="true">♡</span><b>Primeiro passo</b></header>
+<main id="app" tabindex="-1" aria-live="polite"></main>
+<footer>Em situação de urgência, ligue <b>188</b> (CVV, 24 h) ou <b>192</b> (SAMU). Protótipo demonstrativo: os serviços listados são fictícios.</footer>
+<script>
+const CATALOG=[
+{id:1,nome:"Clínica-Escola Modelo",inst:"Faculdade Demonstrativa de Psicologia",cidade:"Belo Horizonte",custo:"Gratuito",modo:["Presencial"],turnos:["Manhã","Tarde"],tipo:"Psicoterapia individual com estagiários supervisionados",horarios:"Seg a sex, 8h às 17h",req:"Documento com foto. Triagem inicial obrigatória.",canal:"Telefone",contato:"(31) 0000-0001 (número demonstrativo)",url:"https://example.org/clinica-escola"},
+{id:2,nome:"Centro de Escuta Comunitária",inst:"Associação Exemplo de Bairro",cidade:"Belo Horizonte",custo:"Baixo custo",modo:["Presencial","Online"],turnos:["Tarde","Noite"],tipo:"Atendimento psicológico individual e grupos de acolhimento",horarios:"Seg a qui, 14h às 21h",req:"Valor social a partir de R$ 20 por sessão (demonstrativo).",canal:"WhatsApp",contato:"(31) 90000-0002 (número demonstrativo)",url:"https://example.org/centro-escuta"},
+{id:3,nome:"Plantão Online de Acolhimento",inst:"Projeto Demonstrativo de Voluntariado",cidade:"Belo Horizonte",custo:"Gratuito",modo:["Online"],turnos:["Noite"],tipo:"Escuta inicial e encaminhamento",horarios:"Todos os dias, 19h às 23h",req:null,canal:"Formulário online",contato:"Preencher o formulário no site (demonstrativo)",url:"https://example.org/plantao"},
+{id:4,nome:"Núcleo de Psicologia Aplicada",inst:"Universidade Exemplo",cidade:"Contagem",custo:"Gratuito",modo:["Presencial","Online"],turnos:["Manhã","Noite"],tipo:"Psicoterapia individual e orientação a famílias",horarios:"Seg a sex, 8h às 12h e 18h às 21h",req:"Moradores da região metropolitana.",canal:"E-mail",contato:"nucleo@example.org (demonstrativo)",url:"https://example.org/nucleo"},
+{id:5,nome:"Espaço Cuidar",inst:"Coletivo Exemplo de Saúde Mental",cidade:"Contagem",custo:"Baixo custo",modo:["Presencial"],turnos:["Tarde"],tipo:"Grupos de apoio e psicoterapia breve",horarios:null,req:"Cadastro prévio na instituição.",canal:"Telefone",contato:"(31) 0000-0005 (número demonstrativo)",url:null},
+{id:6,nome:"Centro de Referência Demonstrativo",inst:"Rede Pública Exemplo",cidade:"Betim",custo:"Gratuito",modo:["Presencial"],turnos:["Manhã","Tarde"],tipo:"Atendimento psicossocial público",horarios:"Seg a sex, 7h às 17h",req:"Documento com foto e comprovante de residência.",canal:"Atendimento presencial",contato:"Rua Exemplo, 100 (endereço demonstrativo)",url:null},
+{id:7,nome:"Terapia Acessível Online",inst:"Instituto Demonstrativo",cidade:"Betim",custo:"Baixo custo",modo:["Online"],turnos:["Manhã","Noite"],tipo:"Psicoterapia individual por vídeo",horarios:"Seg a sáb, 8h às 12h e 19h às 22h",req:"Acesso à internet e fone de ouvido.",canal:"WhatsApp",contato:"(31) 90000-0007 (número demonstrativo)",url:"https://example.org/terapia-online"}
+];
+const CITIES=["Belo Horizonte","Contagem","Betim"];
+const S={screen:"S1",q:{city:"",cost:"",mode:"",shift:""},res:[],sel:null,msg:""};
+const app=document.getElementById("app");
+const norm=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+const NA='<span class="na">Informação não disponível</span>';
+const val=v=>v?v:NA;
+function go(s,focus=true){S.screen=s;S.msg="";render(focus)}
+function opts(list,cur,all){return `<option value="">${all}</option>`+list.map(o=>`<option ${o===cur?"selected":""}>${o}</option>`).join("")}
+const views={
+S1:()=>`<h1>Vamos encontrar um primeiro passo</h1>
+<p>Este guia ajuda você a entender sinais de sobrecarga emocional e a encontrar serviços de apoio psicológico gratuitos ou de baixo custo.</p>
+<p><b>A consulta é aberta:</b> não pede cadastro, login nem dados pessoais.</p>
+<div class="choice">
+<button class="btn" data-go="S2">🌱 Quero orientação<small>Entender sinais e tipos de apoio antes de buscar</small></button>
+<button class="btn sec" data-go="S3">🔎 Buscar serviços<small>Ir direto para a busca por município</small></button></div>
+<div class="note">Este sistema não faz atendimento psicológico nem agendamentos. Isso acontece nos canais de cada instituição.</div>`,
+S2:()=>`<h1>Entender os sinais</h1>
+<p class="mut">Sentir-se sobrecarregado é comum e merece atenção. Você não precisa estar “no limite” para pedir apoio.</p>
+<div class="card"><h2 style="margin-top:0">Sinais que podem aparecer</h2>
+<p>Cansaço constante, tristeza ou irritação frequentes, ansiedade, dificuldade para dormir, perda de interesse no que antes agradava, dificuldade de concentração.</p></div>
+<div class="card"><h2 style="margin-top:0">Impactos na rotina</h2>
+<p>Dificuldade de manter estudos ou trabalho, afastamento de amigos e família, mudanças no apetite ou no sono, sensação de que tudo está pesado.</p></div>
+<div class="card"><h2 style="margin-top:0">Tipos de apoio</h2>
+<p><b>Psicoterapia individual:</b> conversas regulares com um profissional.<br><b>Grupos de acolhimento:</b> encontros com outras pessoas em situações parecidas.<br><b>Escuta inicial:</b> uma primeira conversa para orientar o caminho.</p></div>
+<div class="card"><h2 style="margin-top:0">Quando considerar procurar ajuda</h2>
+<p>Quando esses sinais duram semanas, atrapalham o dia a dia ou deixam você sem saber o que fazer. Em risco imediato, ligue 188 (CVV) ou 192 (SAMU).</p></div>
+<div class="row"><button class="btn" data-go="S3">Ver serviços</button><button class="btn quiet" data-go="END">Encerrar</button></div>`,
+S3:()=>`<h1>Buscar serviços</h1>
+<p class="mut">Informe o município e, se quiser, ajuste os filtros.</p>
+${S.msg?`<div class="note" role="alert"><b>${S.msg}</b></div>`:""}
+<div class="card"><label for="city">Município</label>
+<input id="city" list="cities" value="${S.q.city}" placeholder="Ex.: Belo Horizonte" autocomplete="off">
+<datalist id="cities">${CITIES.map(c=>`<option value="${c}">`).join("")}</datalist>
+<p class="mut" style="font-size:.9rem">No protótipo há dados de Belo Horizonte, Contagem e Betim. Outros municípios simulam uma busca sem resultados.</p>
+<div class="grid3"><div><label for="cost">Custo</label><select id="cost">${opts(["Gratuito","Baixo custo"],S.q.cost,"Qualquer custo")}</select></div>
+<div><label for="mode">Modalidade</label><select id="mode">${opts(["Presencial","Online"],S.q.mode,"Qualquer modalidade")}</select></div>
+<div><label for="shift">Turno</label><select id="shift">${opts(["Manhã","Tarde","Noite"],S.q.shift,"Qualquer turno")}</select></div></div>
+<div class="row"><button class="btn" id="apply">Aplicar filtros</button></div></div>
+<button class="btn quiet" data-go="S1">Voltar ao início</button>`,
+S4:()=>`<h1>${S.res.length} ${S.res.length>1?"serviços encontrados":"serviço encontrado"}</h1>
+<p class="mut">${S.q.city}${S.q.cost?" · "+S.q.cost:""}${S.q.mode?" · "+S.q.mode:""}${S.q.shift?" · "+S.q.shift:""}</p>
+<div class="note">Dados demonstrativos: instituições fictícias.</div>
+${S.res.map(r=>`<article class="card" aria-label="${r.nome}"><h2 style="margin-top:0">${r.nome}</h2>
+<span class="tag ${r.custo==="Gratuito"?"free":""}">💲 ${r.custo}</span><span class="tag">📍 ${r.modo.join(" e ")}</span><span class="tag">🕒 ${r.turnos.join(", ")}</span>
+<div class="row"><button class="btn" data-detail="${r.id}">Ver detalhes</button></div></article>`).join("")}
+<div class="row"><button class="btn sec" data-go="S3">Alterar filtros</button><button class="btn quiet" data-go="END">Encerrar</button></div>`,
+S5:()=>{const r=S.sel;return `<h1>${r.nome}</h1><div class="note">Serviço demonstrativo. O atendimento e o agendamento são feitos pela instituição.</div>
+<div class="card"><dl>
+<div><dt>Tipo de apoio</dt><dd>${val(r.tipo)}</dd></div>
+<div><dt>Instituição responsável</dt><dd>${val(r.inst)}</dd></div>
+<div><dt>Custo</dt><dd>${val(r.custo)}</dd></div>
+<div><dt>Modalidade</dt><dd>${r.modo.join(" e ")}</dd></div>
+<div><dt>Horários</dt><dd>${val(r.horarios)}</dd></div>
+<div><dt>Requisitos para atendimento</dt><dd>${val(r.req)}</dd></div>
+<div><dt>Contato</dt><dd>${val(r.contato)}</dd></div></dl></div>
+<div class="row"><button class="btn" data-go="S6">Ver como iniciar</button><button class="btn sec" data-go="S4">Voltar aos resultados</button></div>`},
+S6:()=>{const r=S.sel;return `<h1>Dar o primeiro passo</h1>
+<div class="card"><p><b>Canal disponível:</b> ${r.canal}</p><p><b>Contato:</b> ${r.contato}</p>
+<h2>Como usar este canal</h2><ol class="steps"><li>Diga que encontrou o serviço em um guia de apoio emocional.</li><li>Pergunte sobre vagas, horários e custo atual.</li><li>Informe os requisitos acima: ${r.req||"não disponíveis, confirme com a instituição"}.</li></ol></div>
+<div class="note">O canal externo é administrado pela instituição responsável. Este guia não recebe nem guarda mensagens.</div>
+<div class="row"><button class="btn" id="copy">📋 Copiar contato</button>
+${r.url?`<a class="btn sec" href="${r.url}" target="_blank" rel="noopener">Abrir canal externo</a>`:`<button class="btn sec" aria-disabled="true" disabled>Canal externo não disponível</button>`}
+<button class="btn quiet" data-go="END">Encerrar</button></div>
+<button class="btn quiet" data-go="S5">Voltar aos detalhes</button>`},
+END:()=>`<div class="end card"><h1>Obrigado por passar por aqui</h1><p style="margin:.5rem auto">Você pode voltar quando quiser. Nenhum dado seu foi guardado.</p>
+<div class="row" style="justify-content:center"><button class="btn" data-go="S1">Começar de novo</button></div></div>`
+};
+function render(focus){
+  app.innerHTML=views[S.screen]();
+  if(S.screen==="S3"&&S.msg)app.querySelector("#apply").scrollIntoView({block:"center"});
+  if(focus){app.focus();if(!S.msg)window.scrollTo(0,0)}
+}
+function search(){
+  const q={city:document.getElementById("city").value.trim(),cost:document.getElementById("cost").value,mode:document.getElementById("mode").value,shift:document.getElementById("shift").value};
+  S.q=q;
+  if(!q.city){S.msg="Informe o município para buscar.";return render(true)}
+  S.res=CATALOG.filter(r=>norm(r.cidade)===norm(q.city)&&(!q.cost||r.custo===q.cost)&&(!q.mode||r.modo.includes(q.mode))&&(!q.shift||r.turnos.includes(q.shift)));
+  if(S.res.length){S.q.city=CATALOG.find(r=>norm(r.cidade)===norm(q.city)).cidade;go("S4")}
+  else{S.msg="Nenhum serviço encontrado. Ajuste os filtros.";render(true)}
+}
+function toast(t){const e=document.createElement("div");e.className="toast";e.setAttribute("role","status");e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2500)}
+app.addEventListener("click",async e=>{
+  const b=e.target.closest("button,a");if(!b)return;
+  if(b.dataset.go)go(b.dataset.go);
+  else if(b.dataset.detail){S.sel=CATALOG.find(r=>r.id==b.dataset.detail);go("S5")}
+  else if(b.id==="apply")search();
+  else if(b.id==="copy"){
+    const txt=`${S.sel.nome} – ${S.sel.canal}: ${S.sel.contato}`;
+    try{await navigator.clipboard.writeText(txt)}catch(_){const t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand("copy")}catch(_){}t.remove()}
+    toast("Contato copiado");
+  }
+});
+app.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="city")search()});
+render(false);
+</script>
+</body>
+</html>
